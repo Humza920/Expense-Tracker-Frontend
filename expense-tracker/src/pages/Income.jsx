@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Download, Trash2 } from "lucide-react";
-import { getExcelFile, deleteIncome, fetchDashboardData } from "../features/dashboardslice";
+import { getExcelFile, deleteIncomeExpense, fetchDashboardData } from "../features/dashboardslice";
 
 export default function Income() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export default function Income() {
   // ✅ Handle Delete
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this income?")) {
-      dispatch(deleteIncome(id));
+      dispatch(deleteIncomeExpense(id));
       dispatch(fetchDashboardData());
     }
   };

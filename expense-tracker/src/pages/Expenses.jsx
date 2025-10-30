@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Download, Trash2 } from "lucide-react";
-import { getExcelFile, deleteExpense, fetchDashboardData } from "../features/dashboardslice"; // ✅ make sure this action exists
+import { getExcelFile, deleteIncomeExpense, fetchDashboardData } from "../features/dashboardslice"; // ✅ make sure this action exists
 
 export default function Expenses() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function Expenses() {
   // ✅ Handle Delete
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this expense?")) {
-      dispatch(deleteExpense(id));
+      dispatch(deleteIncomeExpense(id));
       dispatch(fetchDashboardData())
     }
   };

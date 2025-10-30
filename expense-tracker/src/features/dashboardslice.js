@@ -40,7 +40,7 @@ export const fetchDashboardData = createAsyncThunk(
   }
 );
 
-export const deleteExpense = createAsyncThunk(
+export const deleteIncomeExpense = createAsyncThunk(
   "dashboard/fetchData",
   async (id , { rejectWithValue }) => {
     console.log("📡 fetchDashboardData called..."); // 🔍 check thunk call
