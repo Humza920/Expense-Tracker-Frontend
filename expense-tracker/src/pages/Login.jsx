@@ -1,18 +1,23 @@
-// src/pages/LoginPage.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/authslice";
+import { Navigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const { user, loading } = useSelector((state) => state.auth);
+  console.log(user);
+
+  if (loading) return <p>Checking authentication...</p>;
+  if (user) return<Navigate to="/dashboard" replace />;
   const [emailAddress, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login({emailAddress,password}))
-    setEmail("")
-    setPassword("")
+    dispatch(login({ emailAddress, password }));
+    setEmail("");
+    setPassword("");
   };
 
   return (

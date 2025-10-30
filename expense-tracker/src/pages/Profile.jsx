@@ -20,7 +20,7 @@ export default function Profile() {
 
   return (
     <div className="space-y-9 text-white animate-fadeIn">
-      {/* HEADER */}
+   
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-[#0b1220]/70 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 shadow-lg hover:shadow-pink-500/10 transition-all duration-300">
         <img
           src={profileImg}
@@ -44,14 +44,12 @@ export default function Profile() {
         </button>
       </div>
 
-      {/* ERROR ALERT */}
       {error && (
         <div className="rounded-xl border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-rose-200 text-center font-medium animate-fadeIn">
           {String(error)}
         </div>
       )}
 
-      {/* ACCOUNT STATS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="rounded-2xl bg-gradient-to-br from-[#111827]/80 to-[#0b1220]/70 border border-slate-700/60 p-6 shadow-inner hover:shadow-cyan-500/10 transition-all">
           <p className="text-sm text-gray-400">Member since</p>
@@ -67,7 +65,6 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* ACCOUNT DETAILS */}
       <div className="rounded-2xl bg-gradient-to-br from-[#111827]/80 to-[#0b1220]/70 border border-slate-700/60 p-8 shadow-lg hover:shadow-pink-500/10 transition-all">
         <h2 className="text-2xl font-semibold mb-6 text-white tracking-tight">
           Account Details
