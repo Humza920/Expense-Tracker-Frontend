@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthLayout from "./Layouts/AuthLayout";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import ProtectedRoute from "./components/protectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute"
 import ModalWrapper from "./components/ModalWrapper";
 import Dashboard from "./Layouts/Dashboard";
 import Income from "./pages/Income";
