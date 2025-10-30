@@ -1,8 +1,9 @@
-import { useSelector } from "react-redux";
-import { Download } from "lucide-react";
-import { getExcelFile } from "../features/dashboardslice";
+import { useDispatch, useSelector } from "react-redux";
+import { Download, Trash2 } from "lucide-react";
+import { getExcelFile, deleteIncome, fetchDashboardData } from "../features/dashboardslice";
 
 export default function Income() {
+  const dispatch = useDispatch();
   const dashboard = useSelector((state) => state.dashboard);
   const loading = dashboard?.loading;
   const error = dashboard?.error;
@@ -12,9 +13,17 @@ export default function Income() {
   const totalIncome = dashboard.totalIncome || 0;
   const incomes = dashboard.income || [];
 
+  // ✅ Handle Delete
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this income?")) {
+      dispatch(deleteIncome(id));
+      dispatch(fetchDashboardData());
+    }
+  };
+
   return (
     <div className="text-white space-y-8">
-      {/* ✅ Header Section */}
+      {/* ✅ Header */}
       <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 flex-wrap">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold">Income Overview</h1>
@@ -23,18 +32,19 @@ export default function Income() {
           </p>
         </div>
 
-        {/* ✅ Total + Download Button */}
+        {/* ✅ Right Section */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
           <div className="flex-1 sm:flex-none rounded-2xl bg-[#111827]/70 border border-slate-700/60 px-5 py-4 text-right">
             <p className="text-sm text-gray-300">Total Income (This Month)</p>
-            <p className="text-3xl font-extrabold text-rose-400 mt-1">
+            <p className="text-3xl font-extrabold text-green-400 mt-1">
               ${totalIncome.toLocaleString()}
             </p>
           </div>
 
+          {/* 🟢 Download Button */}
           <button
             onClick={() => getExcelFile("income")}
-            className="flex items-center justify-center gap-2 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-600/40 text-rose-300 hover:text-rose-200 font-medium px-5 py-3 rounded-xl transition-all shadow-sm hover:shadow-rose-500/20 active:scale-95 w-full sm:w-auto"
+            className="flex items-center justify-center gap-2 bg-green-500/20 hover:bg-green-500/30 border border-green-600/40 text-green-300 hover:text-green-200 font-medium px-5 py-3 rounded-xl transition-all shadow-sm hover:shadow-green-500/20 active:scale-95 w-full sm:w-auto"
           >
             <Download className="w-5 h-5" />
             Download Excel
@@ -42,20 +52,20 @@ export default function Income() {
         </div>
       </div>
 
-      {/* ✅ Loading & Error */}
+      {/* ✅ Status Messages */}
       {loading && (
         <div className="rounded-xl border border-slate-700/60 bg-[#111827]/70 px-4 py-3 text-gray-300 text-center">
           Loading...
         </div>
       )}
       {error && (
-        <div className="rounded-xl border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-rose-200 text-center">
+        <div className="rounded-xl border border-green-500/40 bg-green-500/10 px-4 py-3 text-green-200 text-center">
           {String(error)}
         </div>
       )}
 
-      {/* ✅ Incomes List */}
-      <div className="rounded-2xl bg-[#111827]/70 border border-slate-700/60 p-5 sm:p-6 shadow-lg shadow-black/20 transition-all hover:shadow-rose-500/20">
+      {/* ✅ Income List */}
+      <div className="rounded-2xl bg-[#111827]/70 border border-slate-700/60 p-5 sm:p-6 shadow-lg shadow-black/20 transition-all hover:shadow-green-500/20">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-3">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             💰 Recent Incomes
@@ -76,6 +86,7 @@ export default function Income() {
                 key={t._id || Math.random()}
                 className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-4 hover:bg-[#1e293b]/60 transition-colors rounded-xl px-3"
               >
+                {/* Left Side */}
                 <div className="flex items-center gap-4">
                   <span className="text-2xl">{t.icon}</span>
                   <div>
@@ -88,10 +99,20 @@ export default function Income() {
                   </div>
                 </div>
 
-                <div className="text-right">
-                  <p className="font-semibold text-rose-400">
+                {/* Right Side (Amount + Delete) */}
+                <div className="flex items-center gap-4 sm:gap-6">
+                  <p className="font-semibold text-green-400 text-lg">
                     +${t.amount.toLocaleString()}
                   </p>
+
+                  {/* 🗑️ Delete Button */}
+                  <button
+                    onClick={() => handleDelete(t._id)}
+                    className="p-2 rounded-lg bg-green-500/10 hover:bg-green-500/20 border border-green-400/30 text-green-300 hover:text-green-200 transition-all active:scale-95"
+                    title="Delete"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
                 </div>
               </li>
             ))

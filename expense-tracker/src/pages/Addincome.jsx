@@ -1,20 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { add, fetchDashboardData } from "../features/dashboardslice";
+import { closeModal } from "../features/modalslice";
 
 const ICONS = [
-  "💼",
-  "🏦",
-  "🎯",
-  "📈",
-  "🧾",
-  "💸",
-  "🏆",
-  "🎉",
-  "🌟",
-  "🚀",
-  "👔",
-  "🎶",
+  "💼", "🏦", "🎯", "📈", "🧾", "💸", "🏆", "🎉", "🌟", "🚀", "👔", "🎶"
 ];
 
 export default function Addincome() {
@@ -30,14 +20,10 @@ export default function Addincome() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const obj = {
-      source,
-      icon,
-      amount,
-      date,
-    };
-    dispatch(add({show:"income", payload:obj}));
-    dispatch(fetchDashboardData)
+    const obj = { source, icon, amount, date };
+    dispatch(add({ show: "income", payload: obj }));
+    dispatch(fetchDashboardData());
+    dispatch(closeModal());
   };
 
   return (
@@ -53,7 +39,9 @@ export default function Addincome() {
             value={source}
             onChange={(e) => setSource(e.target.value)}
             placeholder="Salary, Freelance, Bonus..."
-            className="w-full px-4 py-3 bg-[#212334] border border-slate-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/40 transition-all"
+            className="w-full px-4 py-3 bg-[#212334] border border-slate-700/50 rounded-xl 
+                       text-white placeholder-gray-500 focus:outline-none 
+                       focus:ring-2 focus:ring-green-500/40 transition-all"
             required
           />
         </div>
@@ -83,9 +71,12 @@ export default function Addincome() {
             onChange={(e) => setIcon(e.target.value)}
             placeholder="💼"
             maxLength={2}
-            className="w-full px-4 py-3 bg-[#212334] border border-slate-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/30 transition-all text-2xl"
+            className="w-full px-4 py-3 bg-[#212334] border border-slate-700/50 rounded-xl 
+                       text-white placeholder-gray-500 focus:outline-none 
+                       focus:ring-2 focus:ring-green-500/30 transition-all text-2xl"
           />
         </div>
+
         <div>
           <label className="block text-gray-300 mb-1 text-sm">Amount</label>
           <input
@@ -95,10 +86,13 @@ export default function Addincome() {
             type="number"
             min="0"
             step="0.01"
-            className="w-full px-4 py-3 bg-[#212334] border border-slate-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/30 transition-all"
+            className="w-full px-4 py-3 bg-[#212334] border border-slate-700/50 rounded-xl 
+                       text-white placeholder-gray-500 focus:outline-none 
+                       focus:ring-2 focus:ring-green-500/30 transition-all"
             required
           />
         </div>
+
         <div>
           <label className="block text-gray-300 mb-1 text-sm">Date</label>
           <input
@@ -106,13 +100,19 @@ export default function Addincome() {
             onChange={(e) => setDate(e.target.value)}
             type="date"
             max={new Date().toISOString().slice(0, 10)}
-            className="w-full px-4 py-3 bg-[#212334] border border-slate-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-green-500/30 transition-all"
+            className="w-full px-4 py-3 bg-[#212334] border border-slate-700/50 rounded-xl 
+                       text-white focus:outline-none focus:ring-2 
+                       focus:ring-green-500/30 transition-all"
             required
           />
         </div>
+
         <button
           type="submit"
-          className="w-full py-3 mt-1 rounded-xl font-semibold text-white bg-gradient-to-r from-green-500/60 to-cyan-500/60 hover:from-green-400/90 hover:to-cyan-400/80 transition-all drop-shadow shadow-green-500/10"
+          className="w-full py-3 mt-1 rounded-xl font-semibold text-white 
+                     bg-gradient-to-r from-green-500/60 to-cyan-500/60 
+                     hover:from-green-400/90 hover:to-cyan-400/80 
+                     transition-all drop-shadow shadow-green-500/10"
         >
           Add Income
         </button>
