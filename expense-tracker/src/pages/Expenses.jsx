@@ -16,10 +16,17 @@ export default function Expenses() {
 
   // ✅ Handle Delete
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this expense?")) {
-      dispatch(deleteIncomeExpense({id , show:"expense"}));
-      dispatch(fetchDashboardData())
-    }
+if (window.confirm("Are you sure you want to delete this expense?")) {
+  dispatch(deleteIncomeExpense({ id, show: "expense" }))
+    .unwrap()
+    .then(() => {
+      dispatch(fetchDashboardData());
+    })
+    .catch((err) => {
+      console.error("Error deleting expense:", err);
+    });
+}
+
   };
 
   return (

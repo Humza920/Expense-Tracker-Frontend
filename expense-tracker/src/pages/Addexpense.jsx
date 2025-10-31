@@ -27,9 +27,15 @@ export default function Addexpense() {
       amount,
       date,
     };
-    dispatch(add({show:"expense", payload:obj}));
-    dispatch(fetchDashboardData())
-    dispatch(closeModal())
+dispatch(add({ show: "expense", payload: obj }))
+  .unwrap()   
+  .then(() => {
+    dispatch(fetchDashboardData());
+    dispatch(closeModal());
+  })
+  .catch((err) => {
+    console.error("Add expense failed:", err);
+  });
   };
 
 

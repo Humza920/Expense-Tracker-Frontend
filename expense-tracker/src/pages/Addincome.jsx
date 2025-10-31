@@ -21,9 +21,15 @@ export default function Addincome() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const obj = { source, icon, amount, date };
-    dispatch(add({ show: "income", payload: obj }));
+dispatch(add({ show: "income", payload: obj }))
+  .unwrap() // ye ensure kare ke promise resolve ya reject ho
+  .then(() => {
     dispatch(fetchDashboardData());
     dispatch(closeModal());
+  })
+  .catch((err) => {
+    console.error("Error adding income:", err);
+  });
   };
 
   return (
