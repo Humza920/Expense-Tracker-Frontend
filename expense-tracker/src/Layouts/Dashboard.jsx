@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import Sidebar from "../components/sidebar";
-import { Menu, X } from "lucide-react"; // icons for mobile menu toggle
-
+import { Menu, X } from "lucide-react"; 
 export default function Dashboard() {
   const [menuOpen, setMenuOpen] = useState(false);
 
