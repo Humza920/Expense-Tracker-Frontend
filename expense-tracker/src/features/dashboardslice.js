@@ -42,7 +42,7 @@ export const fetchDashboardData = createAsyncThunk(
     try {
       const { data } = await api.get("/api/dashboard", { withCredentials: true });
       console.log("✅ Dashboard API success:", data); // 🔍 check successful response
-      return data; // { income, expense, totalIncome, totalExpense, balance }
+      return data; 
     } catch (err) {
       console.log("❌ Dashboard API error:", err.response?.data || err.message);
       return rejectWithValue(err.response?.data || "Failed to fetch dashboard data");
