@@ -1,27 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
-
 export const getExcelFile = async (show) => {
   try {
-    const response = await api.get(`/api/${show}/downloadexcel`, { withCredentials: true, responseType: "blob" })
+    const response = await api.get(`/api/${show}/downloadexcel`, {
+      withCredentials: true,
+      responseType: "blob",
+    });
 
     const blob = new Blob([response.data], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    })
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
 
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `${show}_details.xlsx`
-    a.click()
-    a.remove()
-    window.URL.revokeObjectURL(blob)
-    console.log("✅ Excel file downloaded successfully!")
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${show}_details.xlsx`;
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
 
+    console.log("✅ Excel file downloaded successfully!");
   } catch (error) {
-    console.error("❌ Error downloading Excel file:", error)
+    console.error("❌ Error downloading Excel file:", error);
   }
-}
+};
 
 
 export const fetchDashboardData = createAsyncThunk(
@@ -41,12 +43,12 @@ export const fetchDashboardData = createAsyncThunk(
 );
 
 export const deleteIncomeExpense = createAsyncThunk(
-  "dashboard/fetchData",
-  async (id , { rejectWithValue }) => {
+  "delete/income_expense",
+  async ({id , show} , { rejectWithValue }) => {
     console.log("📡 fetchDashboardData called..."); // 🔍 check thunk call
 
     try {
-      await api.delete(`/api/expense/${id}`, { withCredentials: true });
+      await api.delete(`/api/${show}/${id}`, { withCredentials: true });
       console.log("✅ Delete API success:"); 
       return true; 
     } catch (err) {

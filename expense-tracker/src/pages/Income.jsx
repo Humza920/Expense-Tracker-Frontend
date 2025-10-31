@@ -16,7 +16,7 @@ export default function Income() {
   // ✅ Handle Delete
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this income?")) {
-      dispatch(deleteIncomeExpense(id));
+      dispatch(deleteIncomeExpense({id , show:"income"}));
       dispatch(fetchDashboardData());
     }
   };
