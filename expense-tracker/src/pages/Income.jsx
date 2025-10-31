@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Download, Trash2 } from "lucide-react";
 import {
-  getExcelFile,
+  handleDownloadExcel,
   deleteIncomeExpense,
   fetchDashboardData,
 } from "../features/dashboardslice";
@@ -53,7 +53,7 @@ export default function Income() {
 
           {/* 🟢 Download Button */}
           <button
-            onClick={() => getExcelFile("income")}
+            onClick={() => handleDownloadExcel(incomes , "income")}
             className="flex items-center justify-center gap-2 bg-green-500/20 hover:bg-green-500/30 border border-green-600/40 text-green-300 hover:text-green-200 font-medium px-5 py-3 rounded-xl transition-all shadow-sm hover:shadow-green-500/20 active:scale-95 w-full sm:w-auto"
           >
             <Download className="w-5 h-5" />

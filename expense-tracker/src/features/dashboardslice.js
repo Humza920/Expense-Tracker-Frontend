@@ -1,29 +1,37 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
-export const getExcelFile = async (show) => {
-  try {
-    const response = await api.get(`/api/${show}/downloadexcel`, {
-      withCredentials: true,
-      responseType: "blob",
-    });
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
-    const blob = new Blob([response.data], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${show}_details.xlsx`;
-    a.click();
-    a.remove();
-    window.URL.revokeObjectURL(url);
-
-    console.log("✅ Excel file downloaded successfully!");
-  } catch (error) {
-    console.error("❌ Error downloading Excel file:", error);
+export const handleDownloadExcel = (dataArray, type) => {
+  if (!dataArray || dataArray.length === 0) {
+    alert(`No ${type} data to download!`);
+    return;
   }
+
+  const worksheet = XLSX.utils.json_to_sheet(
+    dataArray.map((item, index) => ({
+      S_No: index + 1,
+      Icon: item.icon,
+      Source: item.source || item.category, 
+      Date: new Date(item.date).toLocaleDateString(),
+    }))
+  );
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, `${type}s`);
+
+  // Convert workbook to blob and download
+  const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+  const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+
+  saveAs(blob, `${type}_List_${new Date().toISOString().split("T")[0]}.xlsx`);
 };
+
+
+
+
+
 
 
 export const fetchDashboardData = createAsyncThunk(
@@ -44,13 +52,13 @@ export const fetchDashboardData = createAsyncThunk(
 
 export const deleteIncomeExpense = createAsyncThunk(
   "delete/income_expense",
-  async ({id , show} , { rejectWithValue }) => {
+  async ({ id, show }, { rejectWithValue }) => {
     console.log("📡 fetchDashboardData called..."); // 🔍 check thunk call
 
     try {
       await api.delete(`/api/${show}/${id}`, { withCredentials: true });
-      console.log("✅ Delete API success:"); 
-      return true; 
+      console.log("✅ Delete API success:");
+      return true;
     } catch (err) {
       console.log("❌ Delete API error:", err.response?.data || err.message);
       return rejectWithValue(err.response?.data || "Failed to fetch dashboard data");
@@ -71,7 +79,7 @@ export const add = createAsyncThunk(
       });
 
       console.log("✅ add success:", data);
-      return data; 
+      return data;
     } catch (err) {
       console.log("❌ add success:", err.response?.data || err.message);
       return rejectWithValue(err.response?.data || "Failed to fetch dashboard data");

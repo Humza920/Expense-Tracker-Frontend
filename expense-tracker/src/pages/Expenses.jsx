@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Download, Trash2 } from "lucide-react";
-import { getExcelFile, deleteIncomeExpense, fetchDashboardData } from "../features/dashboardslice"; // ✅ make sure this action exists
+import { handleDownloadExcel, deleteIncomeExpense, fetchDashboardData } from "../features/dashboardslice"; // ✅ make sure this action exists
 
 export default function Expenses() {
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ if (window.confirm("Are you sure you want to delete this expense?")) {
 
           {/* 🟢 Download Button */}
           <button
-            onClick={() => getExcelFile("expense")}
+            onClick={() => handleDownloadExcel(expenses , "expense")}
             className="flex items-center justify-center gap-2 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-600/40 text-rose-300 hover:text-rose-200 font-medium px-5 py-3 rounded-xl transition-all shadow-sm hover:shadow-rose-500/20 active:scale-95 w-full sm:w-auto"
           >
             <Download className="w-5 h-5" />
