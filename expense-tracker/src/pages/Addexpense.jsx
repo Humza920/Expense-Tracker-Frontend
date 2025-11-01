@@ -21,6 +21,9 @@ export default function Addexpense() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+        if (amount <= 0) {
+      return alert("DONT ADD NEGATIVE VALUE")
+    }
     const obj = {
       category,
       icon,

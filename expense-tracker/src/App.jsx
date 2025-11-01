@@ -9,6 +9,7 @@ import Income from "./pages/Income";
 import Profile from "./pages/Profile";
 import Expenses from "./pages/Expenses";
 import Home from "./pages/Home";
+import Loader from "./components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./features/authslice";
@@ -68,7 +69,7 @@ export default function App() {
     }
   }, [user]);
 
-  if (loading) return <p>Checking authentication...</p>;
+  if (loading) return <Loader />;
 
   return <RouterProvider router={router} />;
 }

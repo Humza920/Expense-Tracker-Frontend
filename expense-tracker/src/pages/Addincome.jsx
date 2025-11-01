@@ -20,6 +20,10 @@ export default function Addincome() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (amount <= 0) {
+      return alert("DONT ADD NEGATIVE VALUE")
+    }
     const obj = { source, icon, amount, date };
 dispatch(add({ show: "income", payload: obj }))
   .unwrap() // ye ensure kare ke promise resolve ya reject ho

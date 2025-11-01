@@ -16,7 +16,14 @@ export default function SignupPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(register({ fullName, emailAddress, password }));
+    const formData = new FormData()
+    formData.append("fullName",fullName)
+    formData.append("emailAddress",emailAddress)
+    formData.append("password",password)
+    formData.append("profileImage",profileImage)
+
+
+    dispatch(register(formData));
     setFullName("");
     setEmail("");
     setPassword("");
@@ -95,7 +102,7 @@ export default function SignupPage() {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e)=>{setProfileImage(e.target.files[1])}}
+                onChange={(e)=>{setProfileImage(e.target.files[0])}}
                 className="hidden"
               />
             </label>
