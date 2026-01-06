@@ -34,7 +34,7 @@ export default function SignupPage() {
 
   return (
     <>
-      <h2 className="text-2xl sm:text-3xl lg:text-4½½xl font-bold text-white mb-2 lg:mb-3 text-center lg:text-left">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 lg:mb-3 text-center lg:text-left">
         Create Account
       </h2>
       <p className="text-gray-300 mb-6 sm:mb-8 lg:mb-10 text-sm sm:text-base lg:text-lg text-center lg:text-left">
@@ -102,7 +102,13 @@ export default function SignupPage() {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e)=>{setProfileImage(e.target.files[0])}}
+                onChange={(e) => {
+                  const file = e.target.files && e.target.files[0];
+                  if (file) {
+                    const previewUrl = URL.createObjectURL(file);
+                    setProfileImage(previewUrl);
+                  }
+                }}
                 className="hidden"
               />
             </label>

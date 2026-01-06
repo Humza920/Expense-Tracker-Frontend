@@ -1,24 +1,37 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import {closeModal} from "../features/modalslice"
+// import { Outlet } from 'react-router-dom'
+// import { useDispatch } from 'react-redux'
+// import { closeModal } from "../features/modalslice"
 
-const ModalWrapper = () => {
-  const dispatch = useDispatch()
+// const ModalWrapper = () => {
+//   const dispatch = useDispatch()
 
-  return (
-     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-[#111827] p-6 rounded-2xl w-full max-w-md shadow-lg relative">
-        <button
-          onClick={dispatch(closeModal)}
-          className="absolute top-4 right-4 text-gray-300 hover:text-white"
-        >
-          ✕
-        </button>
-        <Outlet />
-      </div>
-    </div>
-  )
-}
+//   const handleOverlayClick = (e) => {
+//     if (e.target === e.currentTarget) {
+//       dispatch(closeModal())
+//     }
+//   }
 
-export default ModalWrapper
+//   return (
+//     <div 
+//       className="flex items-center justify-center"
+//       onClick={handleOverlayClick}
+//     >
+//       <div 
+//       // className=
+//       // "bg-[#111827] rounded-2xl w-full max-w-md shadow-2xl relative border border-slate-700"
+//       >
+//         <button
+//           // onClick={() => dispatch(closeModal())}
+//           // className="absolute -top-3 -right-3 w-8 h-8 bg-slate-800 border border-slate-700 rounded-full 
+//           //          text-gray-300 hover:text-white hover:bg-slate-700 flex items-center justify-center
+//           //          transition-colors duration-200 z-10"
+//         >
+//           ✕
+//         </button>
+//         {/* <Outlet /> */}
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default ModalWrapper

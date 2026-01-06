@@ -3,7 +3,7 @@ import AuthLayout from "./Layouts/AuthLayout";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProtectedRoute from "./components/ProtectedRoute"
-import ModalWrapper from "./components/ModalWrapper";
+// import ModalWrapper from "./components/ModalWrapper";
 import Dashboard from "./Layouts/Dashboard";
 import Income from "./pages/Income";
 import Profile from "./pages/Profile";
@@ -14,8 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./features/authslice";
 import { fetchDashboardData } from "./features/dashboardslice";
-import Addexpense from "./pages/Addexpense";
-import Addincome from "./pages/Addincome";
+// import Addexpense from "./pages/Addexpense";
+// import Addincome from "./pages/Addincome";
+import Loader from "./components/Loader";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,14 +32,14 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-  path: "/add",
-  element: <ModalWrapper />, 
-  children: [
-    { path: "expense", element: <Addexpense /> },
-    { path: "income", element: <Addincome /> },
-  ],
-},
+//   {
+//   path: "/add",
+//   element: <ModalWrapper />, 
+//   children: [
+//     { path: "expense", element: <Addexpense /> },
+//     { path: "income", element: <Addincome /> },
+//   ],
+// },
   {
     path: "/dashboard",
     element: (
@@ -69,7 +70,7 @@ export default function App() {
     }
   }, [user]);
 
-  if (loading) return <Loader />;
+  if (loading) return <Loader bg="#111827"/>;
 
   return <RouterProvider router={router} />;
 }
