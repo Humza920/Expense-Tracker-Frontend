@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
-
+import toast from "react-hot-toast";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -46,13 +46,23 @@ export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await api.get("/api/auth/getme", { withCredentials: true });
+      const { data } = await api.get("/api/auth/getme", {
+        withCredentials: true,
+      });
       return data.user;
     } catch (err) {
       return rejectWithValue(err.response?.data || "Not authenticated");
     }
   }
 );
+
+const getErrorMessage = (payload, fallback) => {
+  if (!payload) return fallback;
+  if (typeof payload === "string") return payload;
+  if (payload.message) return payload.message;
+  if (payload.error) return payload.error;
+  return fallback;
+};
 
 const authSlice = createSlice({
   name: "auth",
@@ -73,12 +83,12 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-
+        toast.success("Login successful. Welcome back!");
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-       
+        toast.error(getErrorMessage(action.payload, "Login failed"));
       })
       // 🔹 REGISTER
       .addCase(register.pending, (state) => {
@@ -88,19 +98,20 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-       
+        toast.success("Account created successfully!");
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-       
+        toast.error(getErrorMessage(action.payload, "Signup failed"));
       })
       // 🔹 LOGOUT
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
-
+        toast.success("Logged out successfully");
       })
       .addCase(logout.rejected, (_, action) => {
+        toast.error(getErrorMessage(action.payload, "Logout failed"));
       })
       // 🔹 CHECK AUTH
       .addCase(checkAuth.pending, (state) => {
@@ -110,7 +121,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload;
       })
-      .addCase(checkAuth.rejected, (state, action) => {
+      .addCase(checkAuth.rejected, (state) => {
         state.loading = false;
         state.user = null;
       });
